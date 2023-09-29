@@ -13,7 +13,7 @@ fn main() -> std::io::Result<()> {
         promotion: Piece::None, 
     });
 
-    let stream = TcpStream::connect("127.0.0.1:5000")?;
+    let stream = TcpStream::connect("127.0.0.1:8384")?;
 
     //receive
     let mut de = serde_json::Deserializer::from_reader(&stream);
