@@ -2,9 +2,9 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ServerToClient {
-    board: [[Piece; 8]; 8],
-    moves: Vec<Move>,
-    joever: Joever,
+    pub board: [[Piece; 8]; 8],
+    pub moves: Vec<Move>,
+    pub joever: Joever,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
@@ -49,11 +49,11 @@ pub enum Joever {
 ///sent from client to server
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Move {
-    start_x: usize,
-    start_y: usize,
-    end_x: usize,
-    end_y: usize,
-    promotion: Piece,
+    pub start_x: usize,
+    pub start_y: usize,
+    pub end_x: usize,
+    pub end_y: usize,
+    pub promotion: Piece,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
