@@ -12,5 +12,4 @@ chess-network-protocol = { git = "https://github.com/INDA23PlusPlus/chess-networ
 
 # How it works
 Serde is used to define a JSON schema. We use port 8384 as the default port for historical reasons.
-The server is authorative. The client always asks the server to perform a move on its behalf. The server will then
-always respond with the resulting state.
+The server is authorative. When a tcp connection is established, the server sends the ServerToClient struct to the client. The client then responds with the ClientToServer struct(This means client will always be white should add a handshake variant to ClientToServer so the interaction starts with the client sending to server). The client then waits for the server to send the ServerToClient struct indicating the next move. And then it repeats. If the server at any point thinks that a move is invalid, it will send an identical massage back to the client until the client makes a legal move 

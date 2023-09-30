@@ -46,7 +46,6 @@ pub enum Joever {
     Ongoing,
 }
 
-///sent from client to server
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Move {
     pub start_x: usize,
