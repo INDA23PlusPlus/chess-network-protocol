@@ -5,7 +5,7 @@ use std::io::prelude::*;
 use std::net::TcpStream;
 
 fn main() -> std::io::Result<()> {
-    let stream = TcpStream::connect("127.0.0.1:8384")?;
+    let stream = TcpStream::connect("127.0.0.1:5000")?;
 
     let handshake = ClientToServerHandshake {
         server_color: Color::Black,
@@ -16,7 +16,7 @@ fn main() -> std::io::Result<()> {
 
     //receive
     let mut de = serde_json::Deserializer::from_reader(&stream);
-    let deserialized = ServerToClient::deserialize(&mut de)?;
+    let deserialized = ServerToClientHandshake::deserialize(&mut de)?;
     println!("Recieved: {:?}", deserialized);
 
     //assumes that the client is white

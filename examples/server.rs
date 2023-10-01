@@ -5,7 +5,7 @@ use std::io::prelude::*;
 use std::net::TcpListener;
 
 fn main() -> std::io::Result<()> {
-    let listener = TcpListener::bind("127.0.0.1:8384")?;
+    let listener = TcpListener::bind("127.0.0.1:5000")?;
 
     // accept connections and process them serially
     let (stream, _addr) = listener.accept()?;
