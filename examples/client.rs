@@ -5,7 +5,22 @@ use std::io::prelude::*;
 use std::net::TcpStream;
 
 fn main() -> std::io::Result<()> {
-    let state_test = ClientToServer::Move(Move { 
+    let stream = TcpStream::connect("127.0.0.1:8384")?;
+
+    let handshake = ClientToServerHandshake {
+        server_color: Color::Black,
+    };
+
+    //send
+    serde_json::to_writer(&stream, &handshake).unwrap();
+
+    //receive
+    let mut de = serde_json::Deserializer::from_reader(&stream);
+    let deserialized = ServerToClient::deserialize(&mut de)?;
+    println!("Recieved: {:?}", deserialized);
+
+    //assumes that the client is white
+    let moved = ClientToServer::Move(Move { 
         start_x: 0, 
         start_y: 0, 
         end_x: 1, 
@@ -13,15 +28,17 @@ fn main() -> std::io::Result<()> {
         promotion: Piece::None, 
     });
 
-    let stream = TcpStream::connect("127.0.0.1:8384")?;
+    //send
+    serde_json::to_writer(&stream, &moved).unwrap();
 
     //receive
     let mut de = serde_json::Deserializer::from_reader(&stream);
     let deserialized = ServerToClient::deserialize(&mut de)?;
-
     println!("Recieved: {:?}", deserialized);
 
-    //send
-    serde_json::to_writer(&stream, &state_test).unwrap();
+    //receive
+    let mut de = serde_json::Deserializer::from_reader(&stream);
+    let deserialized = ServerToClient::deserialize(&mut de)?;
+    println!("Recieved: {:?}", deserialized);
     Ok(())
 }

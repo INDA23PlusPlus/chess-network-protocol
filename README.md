@@ -3,7 +3,8 @@ Remember to install `serde_json` to your Cargo.toml.
 Add this repo as a git dependency in the Cargo.toml.
 There are two files that can be used as boilerplate. One is an example
 demonstrating how to connect to a server and send commands and receive data. 
-The other one is an example of receiving and sending data as a server. They are both located in the `examples` folder and can be run with `cargo run --example <name>`.
+The other one is an example of receiving and sending data as a server. They are both located in the `examples` folder and can be run with `cargo run --example <name>`. 
+They show how the handshake and first move should be made and just prints everything received instead of doing any logic with it.
 This repository is a library, so you can use it as a dependency in your own project with:
 ```toml
 [dependencies]

@@ -12,8 +12,10 @@ Includes the start state of the game and what features the server supports.
 */
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ServerToClientHandshake {
-    ///The start state of the game. Should be the `State` variant of `ServerToClient`.
-    pub start_state: ServerToClient,
+    ///The start state of the game.
+    pub board: [[Piece; 8]; 8],
+    pub moves: Vec<Move>,
+    pub joever: Joever,
     ///The features that the server supports. Completely optional to handle and the client can just ignore it if it wants to.
     pub features: Vec<Features>,
 }
