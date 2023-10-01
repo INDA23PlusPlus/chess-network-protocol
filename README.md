@@ -11,6 +11,8 @@ This repository is a library, so you can use it as a dependency in your own proj
 chess-network-protocol = { git = "https://github.com/INDA23PlusPlus/chess-network-protocol" }
 ```
 
+Some parts of the protocol are optional like you do not have to implement draw or resign and if you do not do any kind of animation or rendering of previous moves the `move_made` field can be ignored. Just make sure you implement the minimal protocol described in the `lib.rs` file.
+
 # How it works
 Serde is used to define a JSON schema. We use port 8384 as the default port for historical reasons.
 The server is the one that listens on port 8384 and the client is the one that connects to the server.
@@ -26,3 +28,5 @@ After a TCP connection is established the protocol is as follows:
 6. repeat from step 3.
 
 This is only if the client is white. If the client is black, the server sends the `ServerToClient` struct of the `State` variant first. meaning step 5 would be before step 3.
+
+Draw and resign are optional features that are nice to have so games can be ended without having to play them out or just closing the connection abruptly. They don't have to be implemented but are described in the `lib.rs` file.
