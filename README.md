@@ -12,4 +12,16 @@ chess-network-protocol = { git = "https://github.com/INDA23PlusPlus/chess-networ
 
 # How it works
 Serde is used to define a JSON schema. We use port 8384 as the default port for historical reasons.
-The server is authorative. When a tcp connection is established, the server sends the ServerToClient struct to the client. The client then responds with the ClientToServer struct(This means client will always be white should add a handshake variant to ClientToServer so the interaction starts with the client sending to server). The client then waits for the server to send the ServerToClient struct indicating the next move. And then it repeats. If the server at any point thinks that a move is invalid, it will send an identical massage back to the client until the client makes a legal move 
+The server is the one that listens on port 8384 and the client is the one that connects to the server.
+The server is the one that uses its chess backend for all the chess logik and the client essentially only renders the state of the game and sends the moves to the server.
+
+# Protocol
+After a TCP connection is established the protocol is as follows:
+1. Client sends the `ClientToServerHandshake` struct
+2. Server sends the `ServerToClientHandshake` struct
+3. Client sends the `ClientToServer` struct when it is its turn to make a move.
+4. Server responds with the `ServerToClient` struct of the `State` variant if the move was legal containing the move of the client in the `move_made` field. If the move was illegal, the server responds with the `ServerToClient` struct of the `Error` variant and we step back to step 3 but the client uses the information in the `Error` variant which ahould be the same as in the previous `State` variant.
+5. Server sends the `ServerToClient` struct of the `State` variant when the server has made a move.
+6. repeat from step 3.
+
+This is only if the client is white. If the client is black, the server sends the `ServerToClient` struct of the `State` variant first. meaning step 5 would be before step 3.
