@@ -40,7 +40,9 @@ pub enum Features {
     ///if the server supports pawn promotion
     Promotion,
     ///if the server is able to detect 
-    Stalemate,
+    Salemate,
+    ///if the server is able to generate all possible moves
+    PossibleMoveGeneration,
     ///if the server supports some other feature that is not listed here that they think might be useful to communicate to the player.
     Other(String),
 }
