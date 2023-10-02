@@ -20,7 +20,7 @@ pub struct ServerToClientHandshake {
     pub features: Vec<Features>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Color {
     White,
     Black,
