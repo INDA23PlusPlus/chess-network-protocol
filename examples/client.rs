@@ -6,6 +6,7 @@ use std::net::TcpStream;
 
 fn main() -> std::io::Result<()> {
     let stream = TcpStream::connect("127.0.0.1:5000")?;
+    let mut de = serde_json::Deserializer::from_reader(&stream);
 
     let handshake = ClientToServerHandshake {
         server_color: Color::Black,
@@ -15,7 +16,6 @@ fn main() -> std::io::Result<()> {
     serde_json::to_writer(&stream, &handshake).unwrap();
 
     //receive
-    let mut de = serde_json::Deserializer::from_reader(&stream);
     let deserialized = ServerToClientHandshake::deserialize(&mut de)?;
     println!("Recieved: {:?}", deserialized);
 
@@ -32,12 +32,10 @@ fn main() -> std::io::Result<()> {
     serde_json::to_writer(&stream, &moved).unwrap();
 
     //receive
-    let mut de = serde_json::Deserializer::from_reader(&stream);
     let deserialized = ServerToClient::deserialize(&mut de)?;
     println!("Recieved: {:?}", deserialized);
 
     //receive
-    let mut de = serde_json::Deserializer::from_reader(&stream);
     let deserialized = ServerToClient::deserialize(&mut de)?;
     println!("Recieved: {:?}", deserialized);
     Ok(())

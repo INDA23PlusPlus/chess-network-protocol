@@ -9,9 +9,9 @@ fn main() -> std::io::Result<()> {
 
     // accept connections and process them serially
     let (stream, _addr) = listener.accept()?;
+    let mut de = serde_json::Deserializer::from_reader(&stream);
 
     //receive
-    let mut de = serde_json::Deserializer::from_reader(&stream);
     let deserialized = ClientToServerHandshake::deserialize(&mut de)?;
     println!("Received: {:?}", deserialized);
 
@@ -37,7 +37,6 @@ fn main() -> std::io::Result<()> {
 
     //assumes that the client is white
     //receive
-    let mut de = serde_json::Deserializer::from_reader(&stream);
     let deserialized = ClientToServer::deserialize(&mut de)?;
     println!("Received: {:?}", deserialized);
 
