@@ -12,7 +12,7 @@ Includes the start state of the game and what features the server supports.
 */
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ServerToClientHandshake {
-    ///The start state of the game.
+    ///The start state of the game. The board is row major and the first index is the rank and the second index is the file.
     pub board: [[Piece; 8]; 8],
     pub moves: Vec<Move>,
     pub joever: Joever,
@@ -54,6 +54,7 @@ The `State` and `Error` variants are the only that have to be implemented on bot
 pub enum ServerToClient {
     ///The server sends this to the client to tell it what the current state of the game is after every server move and after every successful client move.
     State {
+        ///The board is row major and the first index is the rank and the second index is the file.
         board: [[Piece; 8]; 8],
         ///All possible moves that the client can make.
         moves: Vec<Move>,
@@ -67,6 +68,7 @@ pub enum ServerToClient {
     The error is just to make it clear to the client player that the move was invalid and why.
     */
     Error {
+        ///The board is row major and the first index is the rank and the second index is the file.
         board: [[Piece; 8]; 8],
         ///All possible moves that the client can make.
         moves: Vec<Move>,
@@ -76,12 +78,14 @@ pub enum ServerToClient {
     },
     ///The server sends this to the client if the server player resigned the game.
     Resigned {
+        ///The board is row major and the first index is the rank and the second index is the file.
         board: [[Piece; 8]; 8],
         ///Should be the color of the server.
         joever: Joever,
     },
     ///The server sends this to the client if the server player offered a draw or accepted a draw offer from the client.
     Draw {
+        ///The board is row major and the first index is the rank and the second index is the file.
         board: [[Piece; 8]; 8],
         moves: Vec<Move>,
     },
