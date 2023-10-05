@@ -54,7 +54,22 @@ The `State` and `Error` variants are the only that have to be implemented on bot
 pub enum ServerToClient {
     ///The server sends this to the client to tell it what the current state of the game is after every server move and after every successful client move.
     State {
-        ///The board is row major and the first index is the rank and the second index is the file.
+        /**
+        The board is row major and the first index is the rank and the second index is the file.
+        All board fields are represented the same way.
+        ```
+        [
+            [Piece::WhiteRook, Piece::WhiteKnight, Piece::WhiteBishop, Piece::WhiteQueen, Piece::WhiteKing, Piece::WhiteBishop, Piece::WhiteKnight, Piece::WhiteRook],
+            [Piece::WhitePawn; 8],
+            [Piece::None; 8],
+            [Piece::None; 8],
+            [Piece::None; 8],
+            [Piece::None; 8],
+            [Piece::BlackPawn; 8],
+            [Piece::BlackRook, Piece::BlackKnight, Piece::BlackBishop, Piece::BlackQueen, Piece::BlackKing, Piece::BlackBishop, Piece::BlackKnight, Piece::BlackRook],
+        ]
+        ```
+        */
         board: [[Piece; 8]; 8],
         ///All possible moves that the client can make.
         moves: Vec<Move>,
